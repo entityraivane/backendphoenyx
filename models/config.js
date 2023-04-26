@@ -7,7 +7,8 @@ class Server {
         this.app = express()
         this.port = process.env.PORT
         this.rutas = {
-            usuario: `/api/usuario`
+            usuario: `/api/usuario`,
+            auth: `/api/auth`
         }
         this.middlewares()
         this.routes()
@@ -22,6 +23,7 @@ class Server {
     }
     routes() {
         this.app.use(this.rutas.usuario, require('../routes/usuario'))
+        this.app.use(this.rutas.auth, require('../routes/auth'))
     }
     listen() {
         this.app.listen(this.port, () => console.log(`Example app listening on port ${this.port}!`))

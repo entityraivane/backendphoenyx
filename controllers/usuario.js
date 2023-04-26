@@ -3,7 +3,7 @@ const Usuario = require("../models/Usuario")
 const bcryptjs = require('bcryptjs');
 const crearUsuario = async (req = request, res = response) => {
     const { estado, rol, permisos, creacion, editado, password, ...newBody } = req.body
-    newBody.estado = `inactivo`
+    newBody.estado = `activo`
     newBody.rol = `INV_ROL`
     newBody.creacion = Date.now()
     newBody.editado = Date.now()
@@ -17,7 +17,7 @@ const crearUsuario = async (req = request, res = response) => {
     return res.json({
         ok: true,
         msg: `crear usuario`,
-        resultado:usuariodb
+        resultado: usuariodb
     })
     //TODO: HACER EL LOGIN Y CREAR EL SOCKET PARA ESTOS
 }
