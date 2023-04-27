@@ -2,6 +2,7 @@ const { request, response } = require("express")
 const bcryptjs = require('bcryptjs')
 const Usuario = require("../models/Usuario")
 const { generarJWT } = require("../helpers/generar-jwt")
+const { googleVerify } = require("../helpers/verificargoogle")
 
 const login = async (req = request, res = response) => {
     const { correo, password } = req.body
@@ -42,7 +43,15 @@ const login = async (req = request, res = response) => {
         })
     }
 }
+const verificarTokenGoolge = async (req = request, res = response) => {
+    const tokenfirebase = await googleVerify(req.body.token)
+    res.json({
+        ok: true,
+        msg: `token de google`,
+        tokenfirebase
+    })
 
+}
 const renovarToken = async (req = request, res = response) => {
     const id = req.usuario.id
     const usuario = req.usuario
@@ -56,6 +65,7 @@ const renovarToken = async (req = request, res = response) => {
 }
 module.exports = {
     login,
-    renovarToken
+    renovarToken,
+    verificarTokenGoolge
 }
 //TODO: FAKTA PROBAR POSTMAN
