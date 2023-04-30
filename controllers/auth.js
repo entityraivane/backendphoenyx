@@ -43,14 +43,37 @@ const login = async (req = request, res = response) => {
         })
     }
 }
-const verificarTokenGoolge = async (req = request, res = response) => {
-    const tokenfirebase = await googleVerify(req.body.token)
-    res.json({
-        ok: true,
-        msg: `token de google`,
-        tokenfirebase
-    })
+const loginGoolge = async (req = request, res = response) => {
+    const { photoURL, displayName, idToken } = req.body
 
+    const { correo } = await googleVerify(idToken)
+    const usuariodb = await Usuario.findOne({ correo })
+    if (!usuariodb) {
+        data = {
+            estado :`activo`,
+            rol : `INV_ROL`,
+            nombre: displayName,
+            img: photoURL,
+            password: '@@@',
+            correo
+        }
+        const usuario = new Usuario(data)
+        await usuario.save()
+        const tokenSistema = await generarJWT(usuario.uid)
+        return res.json({
+            ok: true,
+            msg: `se creo cuenta  con gmail correctamente`,
+            tokenSistema
+        })
+    } else {
+        const tokenSistema = await generarJWT(usuariodb.uid)
+        console.log(tokenSistema)
+        return res.json({
+            ok: true,
+            msg: `se leogeo  con gmail correctamente`,
+            tokenSistema
+        })
+    }
 }
 const renovarToken = async (req = request, res = response) => {
     const id = req.usuario.id
@@ -66,6 +89,6 @@ const renovarToken = async (req = request, res = response) => {
 module.exports = {
     login,
     renovarToken,
-    verificarTokenGoolge
+    loginGoolge
 }
 //TODO: FAKTA PROBAR POSTMAN

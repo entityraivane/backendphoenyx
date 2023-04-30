@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { login, renovarToken, verificarTokenGoolge } = require("../controllers/auth");
+const { login, renovarToken, loginGoolge } = require("../controllers/auth");
 const { check } = require("express-validator");
 const { validarCampos } = require("../middlewares/validar-campos");
 const { validarJWT } = require("../middlewares/validar-jwt");
@@ -18,5 +18,5 @@ router.get('/renovar', [
     validarJWT,
     validarCampos
 ], renovarToken)
-router.get('/tokenfirebase',[],verificarTokenGoolge)
+router.post('/tokenfirebase', [], loginGoolge)
 module.exports = router
