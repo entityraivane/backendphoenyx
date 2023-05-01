@@ -50,23 +50,25 @@ const loginGoolge = async (req = request, res = response) => {
     const usuariodb = await Usuario.findOne({ correo })
     if (!usuariodb) {
         data = {
-            estado :`activo`,
-            rol : `INV_ROL`,
+            estado: `activo`,
+            rol: `INV_ROL`,
             nombre: displayName,
             img: photoURL,
             password: '@@@',
             correo
         }
         const usuario = new Usuario(data)
+
         await usuario.save()
-        const tokenSistema = await generarJWT(usuario.uid)
+        const tokenSistema = await generarJWT(usuario._id)
         return res.json({
             ok: true,
             msg: `se creo cuenta  con gmail correctamente`,
-            tokenSistema
+            tokenSistema,
+
         })
     } else {
-        const tokenSistema = await generarJWT(usuariodb.uid)
+        const tokenSistema = await generarJWT(usuariodb._id)
         console.log(tokenSistema)
         return res.json({
             ok: true,
@@ -76,8 +78,10 @@ const loginGoolge = async (req = request, res = response) => {
     }
 }
 const renovarToken = async (req = request, res = response) => {
-    const id = req.usuario.id
+    const id = req.usuario._id
     const usuario = req.usuario
+    console.log(id)
+    console.log(usuario)
     const token = await generarJWT(id)
     res.json({
         ok: true,
