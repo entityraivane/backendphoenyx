@@ -9,6 +9,11 @@ const UsuarioSchema = Schema({
         type: String,
         default: '0000'
     },
+    img:{
+        type:String,
+        default:'',
+
+    },
     rol: {
         type: String,
         required: true
