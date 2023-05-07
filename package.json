@@ -8,6 +8,7 @@
     "firebase-admin": "^11.7.0",
     "google-auth-library": "^8.7.0",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.0.5"
+    "mongoose": "^7.0.5",
+    "socket.io": "^4.6.1"
   }
 }
