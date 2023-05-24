@@ -55,6 +55,7 @@ const loginGoolge = async (req = request, res = response) => {
       img: photoURL,
       password: "@@@",
       correo,
+      session: "google",
     };
     const usuario = new Usuario(data);
 

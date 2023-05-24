@@ -1,5 +1,9 @@
 const { Schema, model } = require("mongoose");
 const UsuarioSchema = Schema({
+  nombre: {
+    type: String,
+    default: "",
+  },
   correo: {
     type: String,
     required: true,
@@ -10,6 +14,10 @@ const UsuarioSchema = Schema({
     default: "0000",
   },
   img: {
+    type: String,
+    default: "",
+  },
+  session: {
     type: String,
     default: "",
   },
